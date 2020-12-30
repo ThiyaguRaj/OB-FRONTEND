@@ -1,0 +1,50 @@
+
+form,.sigbtn{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+.top .btns button:hover{
+    background-color: none !important;
+}
+
+#err{
+    display: none;
+}
+
+.welcome{
+    font-size: larger;
+}
+
+.buttons{
+    display: inline;
+}
+
+.coform{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+button.subtn{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+.mainview{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+#suc{
+    display: none;
+}
+
+.tab{
+    background-color: rgb(63, 60, 60) !important;
+}
+
+.tablist{
+    max-width: 800px !important;
+    margin-top: 80px !important;
+}
+
+.addbtn{
+    width: 100% !important;
+}
+.head{
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
