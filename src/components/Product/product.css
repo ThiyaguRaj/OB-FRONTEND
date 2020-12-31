@@ -32,12 +32,13 @@ button.subtn{
 }
 
 .tab{
-    background-color: rgb(63, 60, 60) !important;
+    /* background-color: rgb(63, 60, 60) !important; */
+    color: black !important;
 }
 
 .tablist{
-    max-width: 800px !important;
-    margin-top: 80px !important;
+    max-width: 1200px !important;
+    margin-top: 40px !important;
 }
 
 .addbtn{
@@ -47,4 +48,22 @@ button.subtn{
     font-size: 40px;
     font-weight: 700;
     letter-spacing: 1.5px;
+}
+.view {
+    border: none;
+    background: none;
+}
+.hng{
+    font-weight: 900 !important;
+    font-size: medium !important;
+}
+.hd{
+    background-color: rgb(182, 178, 178);
+}
+.unit{
+    width: 100% !important;
+}
+body{
+    /* background-color: #343a40 ;  */
+    background-color: rgb(241, 234, 234) ;  
 }

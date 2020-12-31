@@ -3,6 +3,8 @@ import './product.css';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import { TextField } from '@material-ui/core';
+import {Alert} from '@material-ui/lab';
+import Button from '@material-ui/core/Button';  
 
 class AddProduct extends Component {
     constructor(props) {
@@ -12,6 +14,9 @@ class AddProduct extends Component {
             type: '',
             data: {}
         }
+    }
+    componentDidMount(){
+        document.getElementById('name').focus();
     }
     setName = (e) => {
         this.setState({ name: e.target.value });
@@ -50,37 +55,43 @@ class AddProduct extends Component {
                     });
                 })
 
+            }).catch(err => {
+                if (err.response.data.error) {
+                    name.value = "";
+                    type.value = "";
+                    let er = document.getElementById('err');
+                    er.style.display = "block";
+                    er.innerText = err.response.data.data;
+                }
+
             })
         } else {
             if (name.value.length > 30) {
                 name.value = "";
-                name.placeholder = "Name is too long"
+                name.focus();
+                let er = document.getElementById('err');
+                er.style.display = "block";
+                er.innerText = "Please check Your Product Name. Input value is too long";
             } else {
                 type.value = "";
-                type.placeholder = "Type is too long"
+                type.focus();
+                let er = document.getElementById('err');
+                er.style.display = "block";
+                er.innerText = "Please check Your Product Type. Input value is too long";
             }
         }
     }
     render() {
         return (
             <>
-
-                <div className="logalert mt-5 bg-danger" id="err">
-                    <span className="closebtn ml-auto">
-                        <button className="float-right" onClick={() => { document.getElementById("err").style.display = "none"; }}
-                        >
-                            &times;
-                 </button>
-                    </span>
-                    <label id="msg" className="text-center"></label>
-                </div>
+                <Alert id="err" className="text-center p-4" severity="error"></Alert>
                 <form id="frm" className="col-md-4 offset-md-4 card card-body mb-5 mt-5 p-4" onSubmit={this.submitHandler}>
-                    <h2 className="text-muted">Product</h2>
+                   <h5 className=" text-center mt-4 mb-4">Add Product</h5><hr/>
                     <TextField id="name" label="Name" placeholder="Enter Product Name" variant="outlined" required type="text" onChange={this.setName} className=" mt-4 mb-4" />
-                    <TextField id="type" label="Type" placeholder="Enter Product Type" variant="outlined" required type="text" onChange={this.setType} className=" mb-4" />
-                    <button type="submit" className="btn mt-4 mb-4 btn-primary">
+                    <TextField id="type" label="Type" placeholder="Enter Product Type" variant="outlined" required type="text" onChange={this.setType} className=" mb-4 mt-3" />
+                    <Button variant="contained" size="large" color="primary" type="submit" className="mt-4 mb-4">
                         Submit
-                    </button>
+                    </Button>
                 </form>
             </>
         );

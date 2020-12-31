@@ -16,6 +16,7 @@ import AddOverdue from '../PlanDetail/AddOverdue';
 import UpdateCharge from '../PlanDetail/UpdateCharge';
 import UpdateDetail from '../PlanDetail/UpdateDetail';
 import UpdateOverdue from '../PlanDetail/UpdateOverdue';
+import ViewPlanDetail from '../PlanDetail/ViewPlanDetail';
 
 
 function Nav(props){
@@ -43,6 +44,7 @@ function Nav(props){
         <Route path="/updatecharge" component={UpdateCharge}/> 
         <Route path="/updatedetail" component={UpdateDetail}/> 
         <Route path="/updateoverdue" component={UpdateOverdue}/> 
+        <Route path="/detail" component={ViewPlanDetail}/> 
 
         </>
     );

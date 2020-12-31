@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { TextField } from "@material-ui/core";
+import Button from '@material-ui/core/Button';  
+import Alert from '@material-ui/lab/Alert';
 
 class UpdateProduct extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class UpdateProduct extends Component {
     };
   }
   componentDidMount() {
+    document.getElementById('type').focus();
     this.setState({ product: JSON.parse(localStorage.getItem("uppro")) });
   }
   submitHandler = (e) => {
@@ -48,22 +51,22 @@ class UpdateProduct extends Component {
       if (name.value.length > 30) {
         name.value = "";
         name.placeholder = "Name is too long";
-        name.style.border = "2px solid red";
       } else {
         type.value = "";
-        type.placeholder = "Type is too long";
-        type.style.border = "2px solid red";
+        document.getElementById('err').style.display="block";
+       document.getElementById('err').innerText="Please check the Type Input. Value is too long."
       }
     }
   };
   render() {
     return (
       <>
+       <Alert id="err" className="text-center p-4" severity="error"></Alert>
         <form
-          className="up card card-body col-md-6 offset-md-3 mt-5"
+          className="up card card-body col-md-4 offset-md-4 mt-5"
           onSubmit={this.submitHandler}
         >
-          <h2 className="text-center mt-5 mb-5"> Update Product</h2>
+          <h5 className="text-center text- mt-5 mb-5"> Update Product</h5><hr/>
           <TextField
             id="name"
             label="Name"
@@ -83,9 +86,9 @@ class UpdateProduct extends Component {
             name="productType"
             className=" mt-2 mb-2"
           />
-          <button type="submit" className="btn btn-primary">
+          <Button variant="contained" size="large" color="primary" type="submit" className="mt-4 mb-4">
             Submit
-          </button>
+          </Button>
         </form>
       </>
     );

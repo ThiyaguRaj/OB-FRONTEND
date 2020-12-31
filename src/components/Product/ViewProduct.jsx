@@ -43,7 +43,7 @@ class ViewProduct extends Component {
             Add Plan
           </button>
         </div>
-        <div className="mainview card card-body col-md-10 offset-md-1 mt-5">
+        <div className=" mt-5">
           {
             <>
               <div className="container">
@@ -51,18 +51,18 @@ class ViewProduct extends Component {
                   <Table aria-label="simple table">
                     <TableHead>
                       <TableRow className="tab text-light">
-                        <TableCell>PlanAmount</TableCell>
-                        <TableCell>PlanFrequency</TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Update</TableCell>
-                        <TableCell>Remove</TableCell>
+                        <TableCell className="hng">PlanAmount</TableCell>
+                        <TableCell className="hng">PlanFrequency</TableCell>
+                        <TableCell className="hng">Type</TableCell>
+                        <TableCell className="hng">Update</TableCell>
+                        <TableCell className="hng">Remove</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {JSON.parse(localStorage.getItem("product")).plan.map(
                         (plan) => (
                           <>
-                            <TableRow key={plan.planId}>
+                            <TableRow className="hd" key={plan.planId}>
                               <TableCell component="th" scope="row">
                                 RS. {plan.planAmount}
                               </TableCell>
@@ -162,16 +162,16 @@ class ViewProduct extends Component {
                               >
                                 <Table aria-label="simple table">
                                   <TableHead>
-                                    <TableRow className="bg-dark tab text-light">
-                                      <TableCell>Type</TableCell>
-                                      <TableCell>
+                                    <TableRow className=" tab text-light text-bold">
+                                      <TableCell  className="hng" component="th" scope="row">Type</TableCell>
+                                      <TableCell className="hng">
                                         Detail
                                       </TableCell>
-                                      <TableCell>Unit</TableCell>
-                                      <TableCell>
+                                      <TableCell className="hng" className="hng">Unit</TableCell>
+                                      <TableCell className="hng">
                                         Update
                                       </TableCell>
-                                      <TableCell>
+                                      <TableCell className="hng">
                                         Remove
                                       </TableCell>
 
@@ -293,17 +293,17 @@ class ViewProduct extends Component {
                                 <Table aria-label="simple table">
                                   <TableHead>
                                     <TableRow className="tab text-light">
-                                      <TableCell>Type</TableCell>
-                                      <TableCell>
+                                      <TableCell className="hng">Type</TableCell>
+                                      <TableCell className="hng">
                                         Charge
                                       </TableCell>
-                                      <TableCell>
+                                      <TableCell className="hng">
                                         Document
                                       </TableCell>
-                                      <TableCell>
+                                      <TableCell className="hng">
                                         Update
                                       </TableCell>
-                                      <TableCell>
+                                      <TableCell className="hng">
                                         Remove
                                       </TableCell>
                                     </TableRow>
@@ -423,12 +423,12 @@ class ViewProduct extends Component {
                                 <Table aria-label="simple table">
                                   <TableHead>
                                     <TableRow className=" tab text-light">
-                                      <TableCell>Type</TableCell>
-                                      <TableCell>Service</TableCell>
-                                      <TableCell>Unit</TableCell>
-                                      <TableCell>Cost</TableCell>
-                                      <TableCell>Update</TableCell>
-                                      <TableCell>Remove</TableCell>
+                                      <TableCell className="hng">Type</TableCell>
+                                      <TableCell className="hng">Service</TableCell>
+                                      <TableCell className="hng">Unit</TableCell>
+                                      <TableCell className="hng">Cost</TableCell>
+                                      <TableCell className="hng">Update</TableCell>
+                                      <TableCell className="hng">Remove</TableCell>
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
@@ -514,7 +514,7 @@ class ViewProduct extends Component {
                                     ))}
                                   </TableBody>
                                 </Table>
-                              </TableContainer><hr/>
+                              </TableContainer>
                             </div>
                           </>
                         )

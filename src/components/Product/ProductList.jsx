@@ -11,7 +11,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';  
+import Alert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import ViewCarouselRoundedIcon from '@material-ui/icons/ViewCarouselRounded';
 
 class ProductList extends Component {
     constructor(props) {
@@ -27,12 +29,20 @@ class ProductList extends Component {
             url: "http://localhost:8080/productbilling/products",
             headers: { "Content-Type": "application/json" }
         }).then(resp => {
-            localStorage.setItem(
-                "products",
-                JSON.stringify(resp.data.data)
-            );
+            if (Array.isArray(resp.data.data)) {
+                localStorage.setItem(
+                    "products",
+                    JSON.stringify(resp.data.data)
+                );
+                this.setState({ products: JSON.parse(localStorage.getItem("products")) });
+            }
+        }).catch(err => {
+            let table = document.getElementById('tab');
+            table.style.display = "none"
+            document.getElementById('err').style.display = "block";
+            document.getElementById('err').innerText = "No Products Found "
         })
-        this.setState({ products: JSON.parse(localStorage.getItem("products")) });
+
     }
     clickFunc = () => {
         axios({
@@ -51,16 +61,17 @@ class ProductList extends Component {
     render() {
         return (
             <>
-                <TableContainer component={Paper} className="mt-5 mb-5 tablist ml-auto mr-auto mt-5">
+                <Alert id="err" variant="filled" className="text-center p-4" severity="error"></Alert>
+                <TableContainer component={Paper} className="mb-5 tablist ml-auto mr-auto" id="tab">
                     <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow className="bg-dark text-light">
-                                <TableCell>Id</TableCell>
-                                <TableCell align="center">Name</TableCell>
-                                <TableCell align="center">Type</TableCell>
-                                <TableCell align="center">Details</TableCell>
-                                <TableCell align="center">Update</TableCell>
-                                <TableCell align="center">Remove</TableCell>
+                        <TableHead className="hd">
+                            <TableRow>
+                                <TableCell className="hng">Id</TableCell>
+                                <TableCell className="hng" align="center">Name</TableCell>
+                                <TableCell align="center" className="hng">Type</TableCell>
+                                <TableCell className="hng" align="center">Details</TableCell>
+                                <TableCell align="center" className="hng">Update</TableCell>
+                                <TableCell align="center" className="hng">Remove</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -70,7 +81,7 @@ class ProductList extends Component {
                                         <TableCell component="td" scope="row">{detail.productId}</TableCell>
                                         <TableCell align="center">{detail.productName}</TableCell>
                                         <TableCell align="center">{detail.productType}</TableCell>
-                                        <TableCell align="center"><button className="btn btn-success" onClick={() => {
+                                        <TableCell align="center"><button className="view" onClick={() => {
                                             localStorage.setItem(
                                                 "product",
                                                 JSON.stringify(detail)
@@ -79,17 +90,17 @@ class ProductList extends Component {
                                                 pathname: "/view",
                                                 userData: detail
                                             })
-                                        }}>View</button></TableCell>
+                                        }}><ViewCarouselRoundedIcon /></button></TableCell>
                                         <TableCell align="center"><Button
                                             variant="contained"
                                             color="primary"
                                             onClick={() => {
-                                            localStorage.setItem("uppro", JSON.stringify(detail))
-                                            this.props.history.push({
-                                                pathname: "/update",
-                                            })
-                                        }}>Update</Button></TableCell>
-                                        
+                                                localStorage.setItem("uppro", JSON.stringify(detail))
+                                                this.props.history.push({
+                                                    pathname: "/update",
+                                                })
+                                            }}>Update</Button></TableCell>
+
                                         <TableCell align="center"><IconButton aria-label="delete" onClick={() => {
                                             axios({
                                                 method: 'delete',
@@ -106,6 +117,11 @@ class ProductList extends Component {
                                                         JSON.stringify(resp.data.data)
                                                     );
                                                     this.clickFunc();
+                                                }).catch(err => {
+                                                    localStorage.setItem(
+                                                        "products",
+                                                        []
+                                                    );
                                                 })
                                             })
                                         }}> <DeleteIcon /> </IconButton></TableCell>
