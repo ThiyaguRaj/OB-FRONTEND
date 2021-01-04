@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForeverOutlined';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import ViewCarouselRoundedIcon from '@material-ui/icons/ViewCarouselRounded';
@@ -54,6 +54,8 @@ class ProductList extends Component {
                 "products",
                 JSON.stringify(resp.data.data)
             );
+            document.getElementById('err').style.display = "block";
+            document.getElementById('err').innerText = "Product Removed Successfully"
         })
         this.setState({ products: JSON.parse(localStorage.getItem("products")) });
     }
@@ -61,7 +63,7 @@ class ProductList extends Component {
     render() {
         return (
             <>
-                <Alert id="err" variant="filled" className="text-center p-4" severity="error"></Alert>
+                <Alert id="err" severity="error" className="text-center p-2"></Alert>
                 <TableContainer component={Paper} className="mb-5 tablist ml-auto mr-auto" id="tab">
                     <Table aria-label="simple table">
                         <TableHead className="hd">
@@ -122,9 +124,14 @@ class ProductList extends Component {
                                                         "products",
                                                         []
                                                     );
+                                                    let table = document.getElementById('tab');
+                                                    table.style.display = "none"
+                                                    document.getElementById('err').style.display = "block";
+                                                    document.getElementById('err').innerText = "No Products Found "
+                                                    this.setState({ products: [] });
                                                 })
                                             })
-                                        }}> <DeleteIcon /> </IconButton></TableCell>
+                                        }}><DeleteForeverIcon /></IconButton></TableCell>
 
                                     </TableRow>
                                 )

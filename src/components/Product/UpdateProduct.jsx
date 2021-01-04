@@ -42,7 +42,7 @@ class UpdateProduct extends Component {
         }).then((resp) => {
           localStorage.setItem("products", JSON.stringify(resp.data.data));
           this.props.history.push({
-            pathname: "/home",
+            pathname: "/products",
             userData: resp.data.data,
           });
         });

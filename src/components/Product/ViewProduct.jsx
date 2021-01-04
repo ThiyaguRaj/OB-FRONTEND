@@ -28,12 +28,11 @@ class ViewProduct extends Component {
   render() {
     return (
       <>
-        <div className=" bg-dark pt-5 pb-5 text-center">
-          <h1 className="text-center text-light">
+        <div className=" bg-light pt-5 pb-5 text-center comp">
+          <h1 className="text-center text-dark">
             {this.state.detail.productName} ({this.state.detail.productType})
           </h1>
-          <button
-            className="funcb btn btn-outline-primary mt-5 mb-5 "
+          <Button variant="contained" size="large" color="primary" type="submit" className="mt-4 mb-4"
             onClick={() => {
               this.props.history.push({
                 pathname: "/plan",
@@ -41,7 +40,7 @@ class ViewProduct extends Component {
             }}
           >
             Add Plan
-          </button>
+          </Button>
         </div>
         <div className=" mt-5">
           {
@@ -50,7 +49,7 @@ class ViewProduct extends Component {
                 <TableContainer component={Paper} className="">
                   <Table aria-label="simple table">
                     <TableHead>
-                      <TableRow className="tab text-light">
+                      <TableRow className="tab bg-dark">
                         <TableCell className="hng">PlanAmount</TableCell>
                         <TableCell className="hng">PlanFrequency</TableCell>
                         <TableCell className="hng">Type</TableCell>
@@ -62,7 +61,7 @@ class ViewProduct extends Component {
                       {JSON.parse(localStorage.getItem("product")).plan.map(
                         (plan) => (
                           <>
-                            <TableRow className="hd" key={plan.planId}>
+                            <TableRow className="" key={plan.planId}>
                               <TableCell component="th" scope="row">
                                 RS. {plan.planAmount}
                               </TableCell>
@@ -162,8 +161,8 @@ class ViewProduct extends Component {
                               >
                                 <Table aria-label="simple table">
                                   <TableHead>
-                                    <TableRow className=" tab text-light text-bold">
-                                      <TableCell  className="hng" component="th" scope="row">Type</TableCell>
+                                    <TableRow className=" tab bg-dark">
+                                      <TableCell className="hng" component="th" scope="row">Type</TableCell>
                                       <TableCell className="hng">
                                         Detail
                                       </TableCell>
@@ -292,7 +291,7 @@ class ViewProduct extends Component {
                               <TableContainer component={Paper} className="mt-1">
                                 <Table aria-label="simple table">
                                   <TableHead>
-                                    <TableRow className="tab text-light">
+                                    <TableRow className="tab bg-dark">
                                       <TableCell className="hng">Type</TableCell>
                                       <TableCell className="hng">
                                         Charge
@@ -422,7 +421,7 @@ class ViewProduct extends Component {
                               >
                                 <Table aria-label="simple table">
                                   <TableHead>
-                                    <TableRow className=" tab text-light">
+                                    <TableRow className="bg-dark">
                                       <TableCell className="hng">Type</TableCell>
                                       <TableCell className="hng">Service</TableCell>
                                       <TableCell className="hng">Unit</TableCell>

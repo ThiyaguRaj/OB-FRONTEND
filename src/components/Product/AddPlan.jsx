@@ -51,15 +51,18 @@ class AddPlan extends Component {
           localStorage.setItem("products", JSON.stringify(resp.data.data));
         });
         localStorage.setItem("product", JSON.stringify(resp.data.data));
-        this.props.history.push({
-          pathname: "/view",
-        })
+        document.getElementById('duration').value = "";
+        document.getElementById('cost').value = "";
+        let typ=document.getElementById('type');
+        typ.focus();
+        let er = document.getElementById('err');
+        er.style.display = "block";
+        er.innerText = "Plan Added Successfuly";
       })
     }).catch(err => {
       if (err.response.data.error) {
         document.getElementById('duration').value = "";
         document.getElementById('cost').value = "";
-
         let er = document.getElementById('err');
         er.style.display = "block";
         er.innerText = err.response.data.data;

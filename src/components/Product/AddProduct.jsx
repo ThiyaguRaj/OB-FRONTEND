@@ -50,15 +50,19 @@ class AddProduct extends Component {
                         "products",
                         JSON.stringify(resp.data.data)
                     );
-                    this.props.history.push({
-                        pathname: "/products"
-                    });
+                    name.value = "";
+                    type.value = "";
+                    name.focus();
+                    let er = document.getElementById('err');
+                    er.style.display = "block";
+                    er.innerText = "Product Added Successfullly";
                 })
 
             }).catch(err => {
                 if (err.response.data.error) {
                     name.value = "";
                     type.value = "";
+                    name.focus();
                     let er = document.getElementById('err');
                     er.style.display = "block";
                     er.innerText = err.response.data.data;

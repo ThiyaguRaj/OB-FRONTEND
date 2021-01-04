@@ -54,16 +54,27 @@ button.subtn{
     background: none;
 }
 .hng{
-    font-weight: 900 !important;
-    font-size: medium !important;
+    color: white !important;
 }
 .hd{
-    background-color: rgb(182, 178, 178);
+    background-color: rgb(37, 41, 41);
 }
 .unit{
     width: 100% !important;
 }
 body{
-    /* background-color: #343a40 ;  */
     background-color: rgb(241, 234, 234) ;  
+}
+.com{
+    color: white;
+}
+.items{
+    color: rgb(211, 206, 206) !important;
+}
+.items:hover{
+    text-decoration: none !important;
+}
+.comp{
+    /* border: 2px solid black;
+    border-radius: 10px; */
 }
