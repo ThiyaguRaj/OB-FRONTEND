@@ -41,12 +41,22 @@ class UpdateDetail extends Component {
                   url: "http://localhost:8080/productbilling/products",
                   headers: { "Content-Type": "application/json" },
                 }).then((resp) => {
+                  axios({
+                    method: "get",
+                    url: `http://localhost:8080/productbilling/plans/plan/${this.state.detail.plan.planId}`,
+                    headers: { "Content-Type": "application/json" },
+                  }).then((resp) => {
+                      localStorage.setItem("plandet", JSON.stringify(resp.data.data));
+                      this.props.history.push({
+                        pathname: "/details",
+                      });
+                    })
                   localStorage.setItem("products", JSON.stringify(resp.data.data));
                 });
                 localStorage.setItem("product", JSON.stringify(resp.data.data));
-                this.props.history.push({
-                  pathname: "/view",
-                });
+                // this.props.history.push({
+                //   pathname: "/details",
+                // });
               });
           })
         } else {

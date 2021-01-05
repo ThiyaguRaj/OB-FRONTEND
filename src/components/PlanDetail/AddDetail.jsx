@@ -13,8 +13,9 @@ class AddDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      plan: {},
       type: '',
-      unit:''
+      unit: ''
     };
   }
   componentDidMount() {
@@ -23,49 +24,50 @@ class AddDetail extends Component {
   }
   submitHandler = (e) => {
     e.preventDefault();
-    const docdocument = document.getElementById("unit");
-      let object = {};
-      let formData = new FormData(e.target);
-      formData.forEach((value, key) => {
-        object[key] = value;
-      });
-      object.plan = this.state.plan;
-      let json = JSON.stringify(object);
+    let object = {};
+    let formData = new FormData(e.target);
+    formData.forEach((value, key) => {
+      object[key] = value;
+    });
+    object.plan = this.state.plan;
+    let json = JSON.stringify(object);
+    axios({
+      method: "post",
+      url: "http://localhost:8080/productbilling/plans/detail",
+      data: json,
+      headers: { "Content-Type": "application/json" }
+    }).then(resp => {
       axios({
-        method: "post",
-        url: "http://localhost:8080/productbilling/plans/detail",
-        data: json,
-        headers: { "Content-Type": "application/json" }
-      }).then(resp => {
+        method: "get",
+        url: `http://localhost:8080/productbilling/products/${this.state.plan.product.productId}`,
+        headers: { "Content-Type": "application/json" },
+      }).then((resp) => {
+        localStorage.setItem("product", JSON.stringify(resp.data.data));
         axios({
           method: "get",
-          url: `http://localhost:8080/productbilling/products/${this.state.plan.product.productId}`,
+          url: "http://localhost:8080/productbilling/products",
           headers: { "Content-Type": "application/json" },
         }).then((resp) => {
+          localStorage.setItem("products", JSON.stringify(resp.data.data));
           axios({
             method: "get",
-            url: "http://localhost:8080/productbilling/products",
+            url: `http://localhost:8080/productbilling/plans/plan/${this.state.plan.planId}`,
             headers: { "Content-Type": "application/json" },
           }).then((resp) => {
-            localStorage.setItem("products", JSON.stringify(resp.data.data));
-          });
-          localStorage.setItem("product", JSON.stringify(resp.data.data));
-          this.props.history.push({
-            pathname: "/view",
-          });
+            let val=resp.data.data;
+            val.product=this.state.plan.product;
+            localStorage.setItem("plandet", JSON.stringify(val));
+            this.props.history.push({
+              pathname: "/details",
+            });
+          })
         });
-      }).catch(err => {
-        if (err.response.data.error) {
-          document.getElementById('detail').value = "";
-          document.getElementById('detail').focus();
+      });
 
-          let er = document.getElementById('err');
-          er.style.display = "block";
-          er.innerText = err.response.data.data;
-        }
-      })
-    
-  };
+    })
+
+  }
+
   handleChange = (event) => {
     this.setState({ type: event.target.value });
   };
@@ -116,7 +118,7 @@ class AddDetail extends Component {
             </div>
             <div className="col-md-6">
               <FormControl className="unit mt-2 mb-2" variant="outlined">
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                <InputLabel id="demo-simple-select-label">Unit</InputLabel>
                 <Select required
                   id="unit"
                   name="unit"

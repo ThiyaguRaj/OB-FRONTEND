@@ -72,6 +72,7 @@ class ProductList extends Component {
                                 <TableCell className="hng" align="center">Name</TableCell>
                                 <TableCell align="center" className="hng">Type</TableCell>
                                 <TableCell className="hng" align="center">Details</TableCell>
+                                <TableCell className="hng" align="center">Plan</TableCell>
                                 <TableCell align="center" className="hng">Update</TableCell>
                                 <TableCell align="center" className="hng">Remove</TableCell>
                             </TableRow>
@@ -93,8 +94,21 @@ class ProductList extends Component {
                                                 userData: detail
                                             })
                                         }}><ViewCarouselRoundedIcon /></button></TableCell>
+                                        <TableCell align="center">
+                                            <Button variant="contained" size="small" color="primary" type="submit" className="ml-3"
+                                                onClick={() => {
+                                                    (localStorage.setItem("product",JSON.stringify(detail)));
+                                                    this.props.history.push({
+                                                        pathname: "/plan",
+                                                    });
+                                                }}
+                                            >
+                                                + Plan
+                                            </Button>
+                                        </TableCell>
                                         <TableCell align="center"><Button
                                             variant="contained"
+                                            size="small"
                                             color="primary"
                                             onClick={() => {
                                                 localStorage.setItem("uppro", JSON.stringify(detail))

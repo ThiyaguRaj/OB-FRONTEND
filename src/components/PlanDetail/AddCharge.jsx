@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import axios from "axios";
+import { Alert } from '@material-ui/lab';
 import "../Product/product.css";
+import Button from '@material-ui/core/Button';
 
 class AddCharge extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class AddCharge extends Component {
     };
   }
   componentDidMount() {
+    document.getElementById('type').focus();
     this.setState({ plan: JSON.parse(localStorage.getItem("plandet")) });
   }
   submitHandler = (e) => {
@@ -23,70 +26,88 @@ class AddCharge extends Component {
       formData.forEach((value, key) => {
         object[key] = value;
       });
-      object.plan=this.state.plan;
+      object.plan = this.state.plan;
       let json = JSON.stringify(object);
       axios({
         method: "post",
         url: "http://localhost:8080/productbilling/plans/charge",
         data: json,
         headers: { "Content-Type": "application/json" }
-      }).then(resp=>{
+      }).then(resp => {
         axios({
+          method: "get",
+          url: `http://localhost:8080/productbilling/products/${this.state.plan.product.productId}`,
+          headers: { "Content-Type": "application/json" },
+        }).then((resp) => {
+          localStorage.setItem("product", JSON.stringify(resp.data.data));
+          axios({
             method: "get",
-            url: `http://localhost:8080/productbilling/products/${this.state.plan.product.productId}`,
+            url: "http://localhost:8080/productbilling/products",
             headers: { "Content-Type": "application/json" },
           }).then((resp) => {
+            localStorage.setItem("products", JSON.stringify(resp.data.data));
             axios({
               method: "get",
-              url: "http://localhost:8080/productbilling/products",
+              url: `http://localhost:8080/productbilling/plans/plan/${this.state.plan.planId}`,
               headers: { "Content-Type": "application/json" },
             }).then((resp) => {
-              localStorage.setItem("products", JSON.stringify(resp.data.data));
-            });
-            localStorage.setItem("product", JSON.stringify(resp.data.data));
-            this.props.history.push({
-              pathname: "/view",
-            });
+              let val = resp.data.data;
+              val.product = this.state.plan.product;
+              localStorage.setItem("plandet", JSON.stringify(val));
+              let err = document.getElementById('err');
+              err.style.display = "block";
+              err.innerText = "Details Added Successfully"
+              document.getElementById('mf').reset();
+              doctype.focus();
+            })
           });
+        });
       })
     } else {
       if (doctype.value.length > 30) {
-        doctype.value = "";
-        doctype.placeholder = "Unrecognized Type";
+        let err = document.getElementById('err');
+        err.style.display = "block";
+        err.innerText = "Unrecognized Type"
       } else {
-        docdocument.value = "";
-        docdocument.placeholder = "Unrecognized Document";
+        let err = document.getElementById('err');
+        err.style.display = "block";
+        err.innerText = "Unrecognized Document";
       }
     }
   };
   render() {
     return (
       <>
+        <Alert id="err" className="text-center p-4" severity="error"></Alert>
         <form
           onSubmit={this.submitHandler}
-          className="col-md-4 offset-md-4 card card-body mt-5 p-4"
+          className="col-md-8 offset-md-2 card card-body mt-5 p-4" id="mf"
         >
-          <h2 className="text-center text-muted mt-5 mb-5">Charge</h2>
-          <TextField
-            id="type"
-            label="Type"
-            variant="outlined"
-            required
-            type="text"
-            name="chargeType"
-            className=" mt-2 mb-2"
-          />
-
-          <TextField
-            id="charge"
-            label="Amount"
-            variant="outlined"
-            required
-            type="number"
-            name="charge"
-            className=" mt-2 mb-2"
-          />
-
+          <h6 className="mb-4"> Add Charge Details</h6>
+          <div className="row">
+            <div className="col-md-6">
+              <TextField
+                id="type"
+                label="Type"
+                variant="outlined"
+                required
+                type="text"
+                name="chargeType"
+                className=" mt-2 mb-2 side"
+              />
+            </div>
+            <div className="col-md-6">
+              <TextField
+                id="charge"
+                label="Amount"
+                variant="outlined"
+                required
+                type="number"
+                name="charge"
+                className=" mt-2 mb-2 side"
+              />
+            </div>
+          </div>
           <TextField
             id="document"
             label="Document"
@@ -96,9 +117,13 @@ class AddCharge extends Component {
             className=" mt-2 mb-2"
           />
 
-          <button className="btn btn-primary mt-5 mb-5" type="submit">
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            type="submit" className="lbut">
             Submit
-          </button>
+          </Button>
         </form>
       </>
     );

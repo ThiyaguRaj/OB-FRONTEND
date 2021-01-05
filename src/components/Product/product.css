@@ -54,10 +54,7 @@ button.subtn{
     background: none;
 }
 .hng{
-    color: white !important;
-}
-.hd{
-    background-color: rgb(37, 41, 41);
+    font-weight: 700 !important;
 }
 .unit{
     width: 100% !important;
@@ -74,7 +71,16 @@ body{
 .items:hover{
     text-decoration: none !important;
 }
-.comp{
-    /* border: 2px solid black;
-    border-radius: 10px; */
+.tablist, thead tr{
+    border: 3px solid rgb(196, 193, 193);
+    border-collapse: collapse !important;
+    border-radius: 5px !important;
+}
+.side{
+    width: 100% !important;
+}
+.lbut{
+    max-width: 100px;
+    margin: auto !important;
+    margin-top: 20px !important;
 }
