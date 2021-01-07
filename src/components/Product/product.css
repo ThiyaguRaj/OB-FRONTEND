@@ -10,6 +10,10 @@ form,.sigbtn{
     display: none;
 }
 
+#errr,#erro{
+    visibility: hidden;
+}
+
 .welcome{
     font-size: larger;
 }
@@ -32,12 +36,11 @@ button.subtn{
 }
 
 .tab{
-    /* background-color: rgb(63, 60, 60) !important; */
     color: black !important;
 }
 
 .tablist{
-    max-width: 1200px !important;
+    max-width: 900px !important;
     margin-top: 40px !important;
 }
 
@@ -71,8 +74,8 @@ body{
 .items:hover{
     text-decoration: none !important;
 }
-.tablist, thead tr{
-    border: 3px solid rgb(196, 193, 193);
+.tablist, thead tr,th,td{
+    border: 1px solid black;
     border-collapse: collapse !important;
     border-radius: 5px !important;
 }

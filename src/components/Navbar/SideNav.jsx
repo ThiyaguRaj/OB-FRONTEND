@@ -5,7 +5,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link, withRouter, Route } from 'react-router-dom';
-import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import SearchIcon from '@material-ui/icons/Search';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,14 +16,13 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import PostAddIcon from '@material-ui/icons/PostAdd';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MailIcon from '@material-ui/icons/Mail';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Listp from '../Product/ProductList';
 import AddProduct from '../Product/AddProduct';
 import Welcome from './Welcome';
+import Trash from '../Product/Trash'
 import View from '../Product/ViewProduct';
 import Update from '../Product/UpdateProduct';
 import Remove from '../Product/RemoveProduct';
@@ -37,9 +36,9 @@ import UpdateDetail from '../PlanDetail/UpdateDetail';
 import UpdateOverdue from '../PlanDetail/UpdateOverdue';
 import ViewPlanDetail from '../PlanDetail/ViewPlanDetail';
 import Display from '../PlanDetail/DisplayDetails';
+import AllDetail from '../PlanDetail/AddAllPlanDetails';
+import AllPlan from '../Plan/AllPlans'
 import './wel.css'
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -67,12 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SideNav(props) {
-  const [nav, setNav] = useState(false)
-  useEffect(() => {
-    localStorage.getItem("plandet") && setNav((pre)=>{
-     return true;
-    });
-  }, [nav])
+
   const classes = useStyles();
 
   return (
@@ -104,44 +98,28 @@ function SideNav(props) {
             </Link>
             <Link to="/product">
               <ListItem button key="Product" className="items">
-                <ListItemIcon><LibraryAddIcon /></ListItemIcon>
+                <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
                 <ListItemText primary="Add Product" />
               </ListItem>
             </Link>
           </List>
-          {
-            nav && <>
-              <Divider />
-              <List>
-                <Link to="/adddetail">
-                  <ListItem button key="Add Detail" className="items">
-                    <ListItemIcon><PostAddIcon /></ListItemIcon>
-                    <ListItemText primary="Add Detail" />
-                  </ListItem>
-                </Link>
-                <Link to="/addcharge">
-                  <ListItem button key="Add Charge" className="items">
-                    <ListItemIcon><MonetizationOnIcon /></ListItemIcon>
-                    <ListItemText primary="Add Charge" />
-                  </ListItem>
-                </Link>
-                <Link to="/addoverdue">
-                  <ListItem button key="Add Overdue" className="items">
-                    <ListItemIcon><AssessmentIcon /></ListItemIcon>
-                    <ListItemText primary="Add Overdue" />
-                  </ListItem>
-                </Link>
-              </List>
-            </>
-          }
           <Divider />
           <List>
-            {['Trash'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+            <Link to="/allplans">
+              <ListItem button key="Plan" className="items">
+                <ListItemIcon><SearchIcon /></ListItemIcon>
+                <ListItemText primary="Plan" />
               </ListItem>
-            ))}
+            </Link>
+          </List>
+          <Divider />
+          <List>
+          <Link to="/trash">
+              <ListItem button key="Trash" className="items">
+                <ListItemIcon><InboxIcon /></ListItemIcon>
+                <ListItemText primary="Trash" />
+              </ListItem>
+            </Link>
           </List>
           <Divider />
           <List>
@@ -179,6 +157,9 @@ function SideNav(props) {
           <Route path="/updateoverdue" component={UpdateOverdue} />
           <Route path="/detail" component={ViewPlanDetail} />
           <Route path="/details" component={Display} />
+          <Route path="/adddetails" component={AllDetail} />
+          <Route path="/allplans" component={AllPlan} />
+          <Route path="/trash" component={Trash} />
         </Typography>
       </main>
     </div>

@@ -74,10 +74,10 @@ class AddPlan extends Component {
       <>
         <Alert id="err" className="text-center p-4" severity="error"></Alert>
         <form
-          className="col-md-4 offset-md-4 card card-body mb-5 mt-5 p-4"
           onSubmit={this.submitHandler}
+          className="col-md-8 offset-md-2 card card-body mt-5 p-4" id="mff"
         >
-          <h5 className=" text-center mt-4 mb-4">Add Plan</h5><hr />
+           <h6 className="mb-4"> Add Plan Details</h6>
           <FormControl className=" mt-2 mb-2" variant="outlined">
             <InputLabel id="demo-simple-select-label">Type</InputLabel>
             <Select required
@@ -107,7 +107,7 @@ class AddPlan extends Component {
                 required
                 type="number"
                 name="planFrequency"
-                className=" mt-2 mb-2"
+                className=" mt-2 mb-2 side"
               />
             </div>
             <div className="col-md-6">
@@ -118,11 +118,11 @@ class AddPlan extends Component {
                 required
                 type="number"
                 name="planAmount"
-                className=" mt-2 mb-4"
+                className=" mt-2 mb-4 side"
               />
             </div>
           </div>
-          <Button variant="contained" size="large" color="primary" type="submit" className="mt-4 mb-4">
+          <Button variant="contained" size="small" color="primary" type="submit" className="mt-4 mb-4 lbut">
             Submit
           </Button>
         </form>

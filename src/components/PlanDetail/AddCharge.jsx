@@ -13,14 +13,13 @@ class AddCharge extends Component {
     };
   }
   componentDidMount() {
-    document.getElementById('type').focus();
     this.setState({ plan: JSON.parse(localStorage.getItem("plandet")) });
   }
   submitHandler = (e) => {
     e.preventDefault();
-    const doctype = document.getElementById("type");
-    const docdocument = document.getElementById("document");
-    if (doctype.value.length <= 30 && docdocument.value.length <= 30) {
+    let doctype = document.getElementById('dtype');    
+    let docdocument = document.getElementById("document");
+    if ( doctype.value.length <= 30 && docdocument.value.length <= 30) {
       let object = {};
       let formData = new FormData(e.target);
       formData.forEach((value, key) => {
@@ -54,23 +53,24 @@ class AddCharge extends Component {
               let val = resp.data.data;
               val.product = this.state.plan.product;
               localStorage.setItem("plandet", JSON.stringify(val));
-              let err = document.getElementById('err');
-              err.style.display = "block";
+              let err = document.getElementById('errr');
+              err.style.visibility="visible"
               err.innerText = "Details Added Successfully"
-              document.getElementById('mf').reset();
+              document.getElementById('mff').reset();
               doctype.focus();
             })
           });
         });
-      })
+      }).catch(err=>console.log(err.response)
+      )
     } else {
       if (doctype.value.length > 30) {
-        let err = document.getElementById('err');
-        err.style.display = "block";
+        let err = document.getElementById('errr');
+        err.style.visibility="visible"
         err.innerText = "Unrecognized Type"
       } else {
-        let err = document.getElementById('err');
-        err.style.display = "block";
+        let err = document.getElementById('errr');
+        err.style.visibility="visible"
         err.innerText = "Unrecognized Document";
       }
     }
@@ -78,16 +78,16 @@ class AddCharge extends Component {
   render() {
     return (
       <>
-        <Alert id="err" className="text-center p-4" severity="error"></Alert>
+        <Alert id="errr" className="text-center p-4 mt-5" severity="error"></Alert>
         <form
           onSubmit={this.submitHandler}
-          className="col-md-8 offset-md-2 card card-body mt-5 p-4" id="mf"
+          className="col-md-8 offset-md-2 card card-body mt-5 p-4" id="mff"
         >
           <h6 className="mb-4"> Add Charge Details</h6>
           <div className="row">
             <div className="col-md-6">
               <TextField
-                id="type"
+                id="dtype"
                 label="Type"
                 variant="outlined"
                 required

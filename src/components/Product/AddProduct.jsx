@@ -89,11 +89,11 @@ class AddProduct extends Component {
         return (
             <>
                 <Alert id="err" className="text-center p-4" severity="error"></Alert>
-                <form id="frm" className="col-md-4 offset-md-4 card card-body mb-5 mt-5 p-4" onSubmit={this.submitHandler}>
-                   <h5 className=" text-center mt-4 mb-4">Add Product</h5><hr/>
+                <form id="frm" className="col-md-8 offset-md-2 card card-body mt-5 p-4" id="mff" onSubmit={this.submitHandler}>
+                <h6 className="mb-4"> Add a new Product</h6>
                     <TextField id="name" label="Name" placeholder="Enter Product Name" variant="outlined" required type="text" onChange={this.setName} className=" mt-4 mb-4" />
-                    <TextField id="type" label="Type" placeholder="Enter Product Type" variant="outlined" required type="text" onChange={this.setType} className=" mb-4 mt-3" />
-                    <Button variant="contained" size="large" color="primary" type="submit" className="mt-4 mb-4">
+                    <TextField id="type" label="Type" placeholder="Enter Product Type" variant="outlined" required type="text" onChange={this.setType} className=" mb-2 mt-2" />
+                    <Button variant="contained" size="large" color="primary" type="submit" className="mt- mb-4 lbut">
                         Submit
                     </Button>
                 </form>

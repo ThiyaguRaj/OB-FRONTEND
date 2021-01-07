@@ -54,12 +54,14 @@ class AddDetail extends Component {
             url: `http://localhost:8080/productbilling/plans/plan/${this.state.plan.planId}`,
             headers: { "Content-Type": "application/json" },
           }).then((resp) => {
-            let val=resp.data.data;
-            val.product=this.state.plan.product;
+            let val = resp.data.data;
+            val.product = this.state.plan.product;
             localStorage.setItem("plandet", JSON.stringify(val));
-            this.props.history.push({
-              pathname: "/details",
-            });
+            let err = document.getElementById('err');
+            err.style.display = "block";
+            err.innerText = "Details Added Successfully"
+            document.getElementById('mf').reset();
+            document.getElementById('type').focus();
           })
         });
       });
@@ -77,12 +79,13 @@ class AddDetail extends Component {
   render() {
     return (
       <>
-        <Alert id="err" className="text-center p-4" severity="error"></Alert>
+        <Alert id="err" className="text-center p-4" severity="success"></Alert>
         <form
           onSubmit={this.submitHandler}
-          className="col-md-4 offset-md-4 card card-body mt-5 p-4"
+          className="col-md-8 offset-md-2 card card-body mt-5 p-4"
+          id="mf"
         >
-          <h2 className="text-center text-muted mt-5 mb-5">Detail</h2><hr />
+          <h6 className="mb-4">Add Plan Detail</h6>
           <FormControl className=" mt-2 mb-2" variant="outlined">
             <InputLabel id="demo-simple-select-label">Type</InputLabel>
             <Select required
@@ -113,7 +116,7 @@ class AddDetail extends Component {
                 required
                 type="number"
                 name="detail"
-                className=" mt-2 mb-2"
+                className=" mt-2 mb-2 side"
               />
             </div>
             <div className="col-md-6">
@@ -122,6 +125,7 @@ class AddDetail extends Component {
                 <Select required
                   id="unit"
                   name="unit"
+                  required
                   value={this.state.unit}
                   onChange={this.handleChangeUnit}
                   label="Unit"
@@ -136,7 +140,7 @@ class AddDetail extends Component {
               </FormControl>
             </div>
           </div>
-          <Button variant="contained" size="large" color="primary" type="submit" className="mt-4 mb-4">
+          <Button variant="contained" size="small" color="primary" type="submit" className="mt-4 mb-4 lbut">
             Submit
           </Button>
         </form>

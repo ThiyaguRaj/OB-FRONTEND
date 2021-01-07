@@ -13,7 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForeverOutlined';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
-import ViewCarouselRoundedIcon from '@material-ui/icons/ViewCarouselRounded';
 
 class ProductList extends Component {
     constructor(props) {
@@ -23,7 +22,7 @@ class ProductList extends Component {
             render: false
         }
     }
-    componentDidMount() {
+    componentDidMount() {   
         axios({
             method: 'get',
             url: "http://localhost:8080/productbilling/products",
@@ -63,7 +62,8 @@ class ProductList extends Component {
     render() {
         return (
             <>
-                <Alert id="err" severity="error" className="text-center p-2"></Alert>
+                <Alert id="err" severity="error" className="text-center p-2 mb-4 col-md-6 offset-md-3"></Alert>
+                <Alert onClose={() => {document.getElementById('info').style.visibility = "hidden";}} id="info" className="" severity="info">The table below holds the list of available products — check it out!</Alert>
                 <TableContainer component={Paper} className="mb-5 tablist ml-auto mr-auto" id="tab">
                     <Table aria-label="simple table">
                         <TableHead className="hd">
@@ -84,20 +84,24 @@ class ProductList extends Component {
                                         <TableCell component="td" scope="row">{detail.productId}</TableCell>
                                         <TableCell align="center">{detail.productName}</TableCell>
                                         <TableCell align="center">{detail.productType}</TableCell>
-                                        <TableCell align="center"><button className="view" onClick={() => {
-                                            localStorage.setItem(
-                                                "product",
-                                                JSON.stringify(detail)
-                                            );
-                                            this.props.history.push({
-                                                pathname: "/view",
-                                                userData: detail
-                                            })
-                                        }}><ViewCarouselRoundedIcon /></button></TableCell>
+                                        <TableCell align="center"><Button
+                                            variant="contained"
+                                            size="small"
+                                            color="primary"
+                                            className="view" onClick={() => {
+                                                localStorage.setItem(
+                                                    "product",
+                                                    JSON.stringify(detail)
+                                                );
+                                                this.props.history.push({
+                                                    pathname: "/view",
+                                                    userData: detail
+                                                })
+                                            }}>View</Button></TableCell>
                                         <TableCell align="center">
                                             <Button variant="contained" size="small" color="primary" type="submit" className="ml-3"
                                                 onClick={() => {
-                                                    (localStorage.setItem("product",JSON.stringify(detail)));
+                                                    (localStorage.setItem("product", JSON.stringify(detail)));
                                                     this.props.history.push({
                                                         pathname: "/plan",
                                                     });
@@ -123,6 +127,15 @@ class ProductList extends Component {
                                                 url: `http://localhost:8080/productbilling/products/${detail.productId}`,
                                                 headers: { "Content-Type": "application/json" }
                                             }).then(resp => {
+                                                let store=localStorage.getItem("trash");
+                                                if(store!=null){
+                                                    let space=JSON.parse(store);
+                                                    space.push(resp.data.data);
+                                                    localStorage.setItem("trash",JSON.stringify(space));
+                                                }else{
+                                                    let a=[resp.data.data];
+                                                    localStorage.setItem("trash",JSON.stringify(a));
+                                                }
                                                 axios({
                                                     method: 'get',
                                                     url: "http://localhost:8080/productbilling/products",
